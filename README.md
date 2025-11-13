@@ -1,0 +1,43 @@
+# Useless's Shop Bot
+
+This bot is based around SellAuth, And Uses a Key System i made that makes the user join your discord server to redeem the product. This bot uses Supabase to manage and view the data and items you sell. Upon Key Redemption it will give the user a Buyer Role and log every action preformed during the redemption module.
+
+How to set up: Download the ZIP file provided and load it into a code editor like Visual Studio Code, Make sure you have the following dependencies installed:
+- supabase
+- dotenv
+- discord
+
+Once installed, Make a file and name it: .env and past the following code into it:
+
+```
+DISCORD_TOKEN=YOUR_BOT_TOKEN
+STATUS=Redeeming Keys 🗝️
+
+SUPABASE_URL=SUPABASE_URL
+SUPABASE_KEY=SUPABASE_ANNON_KEY
+```
+
+Then, Config both that and shop.py. 
+
+Making a Supabase database:
+Go to supabase.com and create an account, then make a new project and create your first database, scroll down to find your URL and ANNON KEY. then, go to your navagation and click "SQL Editor" paste in the following code:
+
+```
+-- Table: products
+CREATE TABLE IF NOT EXISTS public.products (
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    key text UNIQUE NOT NULL,
+    product text NOT NULL,
+    context text NOT NULL,
+    created_at timestamptz DEFAULT timezone('utc'::text, now()),
+    redeemed boolean DEFAULT false
+);
+
+-- Optional: Add an index for faster key lookups
+CREATE INDEX IF NOT EXISTS idx_products_key ON public.products (key);
+
+-- Optional: Make sure only unique, unredeemed keys can exist
+ALTER TABLE public.products
+ADD CONSTRAINT unique_active_key UNIQUE (key, redeemed);
+```
+Then click Run Selected towards the bottom right to middle corner. it should respond with "Success. No rows returned" That means you did this correct. Now all you have to do is upload your product info in the **product* row and the redeem key in *key* row,  for each product you want to make, create a new row, this will represent your stock, each time a key is redeemed, the row and all its data is deleted.
