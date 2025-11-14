@@ -6,6 +6,7 @@ How to set up: Download the ZIP file provided and load it into a code editor lik
 - supabase
 - dotenv
 - discord
+- requests
 
 Once installed, Make a file and name it: .env and past the following code into it:
 
@@ -60,3 +61,71 @@ CREATE TABLE public.role_redeem (
 ```
 
 Then click Run Selected towards the bottom right to middle corner. it should respond with "Success. No rows returned" That means you did this correct. Now all you have to do is upload your product info in the **product* row and the redeem key in *key* row,  for each product you want to make, create a new row, this will represent your stock, each time a key is redeemed, the row and all its data is deleted.
+
+
+**How to use the json system**
+
+With our new update, youu can send digital zip files to your customers! To do this, open buttonconfig.json
+
+It Might Look Like this:
+
+```
+{
+  "buttons": [
+    {
+      "ButtonName": "Claim Fortnite Pack",
+      "ButtonColor": "green",
+      "ButtonProductPath": "./products/fortnite_pack.zip",
+      "RedeemRole": "1438358929187934310"
+    },
+    {
+      "ButtonName": "Claim Minecraft Mod",
+      "ButtonColor": "blurple",
+      "ButtonProductPath": "./products/mc_mod.zip",
+      "RedeemRole": "143900000000000000"
+    }
+  ]
+}
+```
+Or this:
+```
+{
+  "buttons": [
+    {
+      "ButtonName": "Claim Fortnite Pack",
+      "ButtonColor": "green",
+      "ButtonProductPath": "./Products/Vouch-Bot.zip",
+      "RedeemRole": "1439009409522077898"
+    }
+  ]
+}
+```
+
+If it does Amazing! This is how to config it! For what i know you can have as many virtual product buttons as you want, each button template consists of this:
+```
+{
+      "ButtonName": "",
+      "ButtonColor": "",
+      "ButtonProductPath": "",
+      "RedeemRole": ""
+}
+```
+For every product, add a new collum of that code!
+
+Now, the button Name is Pretty Obvious, the name of the buttons. But for the button color, your quite limited because of discord. Here are your options
+```
+Options:
+- grey
+- green
+- gray
+- red
+- blurple
+```
+For the "ButtonProductPath" Its the Past to your product you be sending to the user, for example:
+```
+./Products/Vouch-Bot.zip
+```
+Then for the RedeemRole, Its the role you need to claim the zip file and click the button. This will be auto-added when they redeem the code you sent them via sellauth, using the code-redeem command.
+
+And boom! Thats how you use the config for the New Panel!
+
